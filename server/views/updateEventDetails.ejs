@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Update Event Details</title>
+  </head>
+  <body>
+    <h1>Update Event Details</h1>
+
+    <form action="/event/update/<%- event._id %>" method="POST">
+      <label>Event Name:</label><br />
+      <input
+        type="text"
+        value="<%- event.eventName %>"
+        name="eventName"
+        required
+      /><br />
+
+      <label>Description:</label><br />
+      <input
+        type="text"
+        value="<%-event.description%>"
+        name="description"
+        required
+      /><br />
+
+      <label>Date:</label><br />
+      <input type="date" value="<%- event.date.toISOString().slice(0,10) %>" name="date" required /><br />
+
+      <label>Time:</label><br />
+      <input type="time" value="<%- event.time %>" name="time" required /><br />
+
+      <label>Location:</label><br />
+      <input
+        type="text"
+        value="<%- event.location %>"
+        name="location"
+        required
+      /><br />
+
+      <label>Max Volunteers:</label><br />
+      <input
+        type="number"
+        value="<%- event.maxVolunteers %>"
+        name="maxVolunteers"
+      /><br />
+
+      <input type="submit" value="Update" />
+    </form>
+  </body>
+</html>

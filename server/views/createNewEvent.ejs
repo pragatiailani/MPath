@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/event/new" method="POST">
+      <label>Event Name:</label><br />
+      <input type="text" name="eventName" required /><br />
+
+      <label>Description:</label><br />
+      <input type="text" name="description" required /><br />
+
+      <label>Date:</label><br />
+      <input type="date" name="date" required /><br />
+
+      <label>Time:</label><br />
+      <input type="time" name="time" required /><br />
+
+      <label>Location:</label><br />
+      <input type="text" name="location" required /><br />
+
+      <label>Max Volunteers:</label><br />
+      <input type="number" name="maxVolunteers" /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+    <%= (locals.error) ? locals.error : '' %>
+  </body>
+</html>
