@@ -36,12 +36,12 @@ async function handleCreateEvent(req, res) {
     maxVolunteers,
   } = req.body;
 
-  const { id, type } = req.user; // replace this with your actual logic to get the user's ID and type
+  const { id, role } = req.user; // replace this with your actual logic to get the user's ID and type
 
   try {
     const event = new Event({
       organizerId: id,
-      organizerModel: type,
+      organizerModel: role,
       eventName,
       description,
       eventType,
@@ -55,7 +55,7 @@ async function handleCreateEvent(req, res) {
     await event.save();
     res.status(201).json(event);
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", error: error.message });
   }
 }
 
