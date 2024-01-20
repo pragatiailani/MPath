@@ -17,7 +17,7 @@ router.get("/", handleGetAllEvents);
 router
   .route("/new")
   .get(authorize(), (req, res) => {
-    res.render("createNewEvent");
+    return res.render("createNewEvent");
   })
   .post(authorize(), handleCreateEvent);
 

@@ -9,7 +9,7 @@ const feedbackSchema = new mongoose.Schema({
   },
   rating: { type: Number, required: true },
   comment: { type: String },
-});
+}, {timestamps: true});
 
 const Feedback = mongoose.model("feedbacks", feedbackSchema);
 

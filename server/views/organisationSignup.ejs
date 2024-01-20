@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/organisation/signup" method="POST">
+      <label for="name">Organisation Name:</label><br />
+      <input type="text" id="name" name="name" required /><br />
+
+      <label>Description:</label><br />
+      <input type="text" name="description" required /><br />
+
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" required /><br />
+
+      <label>Contact Number:</label><br />
+      <input type="number" name="phoneNo" required /><br />
+
+      <label for="location">Address:</label><br />
+      <input type="text" id="address" name="address" /><br />
+
+      <label for="password">Password:</label><br />
+      <input type="password" id="password" name="password" required /><br />
+
+      <input type="submit" value="Sign Up" />
+    </form>
+    <%= (locals.error) ? locals.error : '' %>
+  </body>
+</html>

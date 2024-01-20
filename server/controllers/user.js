@@ -1,5 +1,12 @@
-const { mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const User = require("../models/user");
+const Donor = require("../models/donor");
+
+function handleUserSignInRender(req, res) {
+  return res.render("signin", {
+    message: req.flash("success"),
+  });
+}
 
 async function handleUserSignIn(req, res) {
   const { email, password } = req.body;
@@ -11,17 +18,25 @@ async function handleUserSignIn(req, res) {
   }
 }
 
+function handleUserSignUpRender(req, res) {
+  return res.render("signup");
+}
+
 async function handleUserSignUp(req, res) {
-  const { fullName, email, password, skills, interests, location } = req.body;
+  const { fullName, email, phone, aadharno, education, job, password, languages, skills, interests, location } = req.body;
   try {
     const user = new User({
       fullName,
       email,
+      phone,
+      aadharno,
+      education,
+      job,
       password,
+      languages: languages.split(",").map((language) => language.trim()), // assuming languages are comma-separated
       skills: skills.split(",").map((skill) => skill.trim()), // assuming skills are comma-separated
       interests: interests.split(",").map((interest) => interest.trim()), // assuming interests are comma-separated
       location,
-      // profileImageURL,
     });
 
     await user.save();
@@ -58,14 +73,24 @@ async function handleDeleteUserById(req, res) {
   }
 }
 
+async function handleUpdateUserRender(req, res) {
+  const id = req.params.id;
+  const user = await User.findById(id, { password: 0, salt: 0 });
+  return res.render("updateUserDetails", { user });
+}
+
 async function handleUpdateUserById(req, res) {
   const body = req.body;
   const userId = req.user.id; // Here is the user's ID
 
   const updatedUser = {
     fullName: body.full_name,
+    phone: body.phone,
+    aadharno: body.aadharno,
+    education: body.education,
+    job: body.job,
     email: body.email,
-    // profileImageURL: body.profile_image_url,
+    languages: languages.split(",").map((language) => language.trim()), // assuming languages are comma-separated\
     skills: body.skills.split(",").map((skill) => skill.trim()),
     interests: body.interests.split(",").map((interest) => interest.trim()),
     location: body.location,
@@ -84,11 +109,31 @@ function handleUserLogout(req, res) {
   return res.redirect("/");
 }
 
+async function handleAddUserDonation(req, res) {
+  const { donationAmount } = req.body;
+  try {
+    const donor = new Donor({
+      donorId: req.user.id,
+      donationAmount,
+      eventId: req.params.id,
+    });
+
+    await donor.save();
+    return res.send("Donated Successfully");
+  } catch (error) {
+    res.send({ message: "error donating", error: error });
+  }
+}
+
 module.exports = {
+  handleUserSignInRender,
   handleUserSignIn,
+  handleUserSignUpRender,
   handleUserSignUp,
   handleGetUserById,
   handleDeleteUserById,
+  handleUpdateUserRender,
   handleUpdateUserById,
   handleUserLogout,
+  handleAddUserDonation,
 };

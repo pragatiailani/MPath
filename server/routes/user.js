@@ -6,41 +6,25 @@ const {
   handleDeleteUserById,
   handleUpdateUserById,
   handleUserLogout,
+  handleUserSignInRender,
+  handleUserSignUpRender,
+  handleUpdateUserRender,
 } = require("../controllers/user");
-const User = require("../models/user");
+
 const { authorize } = require("../middlewares/authorization");
 
 const router = Router();
 
-router
-  .route("/signin")
-  .get((req, res) => {
-    return res.render("signin", {
-      message: req.flash("success"),
-    });
-  })
-  .post(handleUserSignIn);
+router.route("/signin").get(handleUserSignInRender).post(handleUserSignIn);
 
-router
-  .route("/signup")
-  .get((req, res) => {
-    return res.render("signup");
-  })
-  .post(handleUserSignUp);
+router.route("/signup").get(handleUserSignUpRender).post(handleUserSignUp);
 
-router
-  .route("/update")
-  .get(authorize(), async (req, res) => {
-    const id = req.params.id;
-    const user = await User.findById(id, { password: 0, salt: 0 });
-    return res.render("updateUserDetails", { user });
-  })
-  .post(handleUpdateUserById);
+router.route("/update").get(authorize(), handleUpdateUserRender).post(authorize(), handleUpdateUserById);
 
 router.get("/logout", authorize(), handleUserLogout);
 
 router.get("/:id", authorize(), handleGetUserById);
 
-router.delete("/", authorize(), handleDeleteUserById);
+router.post("/delete", authorize(), handleDeleteUserById);
 
 module.exports = router;

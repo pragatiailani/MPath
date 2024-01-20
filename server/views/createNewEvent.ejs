@@ -1,32 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <form action="/event/new" method="POST">
-      <label>Event Name:</label><br />
-      <input type="text" name="eventName" required /><br />
+<%- include('partials/navbar.ejs') %>
 
-      <label>Description:</label><br />
-      <input type="text" name="description" required /><br />
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <!-- start page title -->
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="page-title-box d-sm-flex align-items-center justify-content-between"
+          >
+            <h4 class="mb-sm-0 font-size-18">New Event</h4>
 
-      <label>Date:</label><br />
-      <input type="date" name="date" required /><br />
+            <div class="page-title-right">
+              <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item">
+                  <a href="javascript: void(0);">Events</a>
+                </li>
+                <li class="breadcrumb-item active">Create New</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end page title -->
+      <%= (locals.error) ? locals.error : '' %>
 
-      <label>Time:</label><br />
-      <input type="time" name="time" required /><br />
+      <form action="/event/new" method="POST">
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Event Name:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" name="eventName" required />
+          </div>
+        </div>
 
-      <label>Location:</label><br />
-      <input type="text" name="location" required /><br />
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Description:</label>
+          <div class="col-sm-9">
+            <input
+              class="form-control"
+              type="text"
+              name="description"
+              required
+            />
+          </div>
+        </div>
 
-      <label>Max Volunteers:</label><br />
-      <input type="number" name="maxVolunteers" /><br />
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Event Type</label>
+          <div class="col-sm-9">
+            <select class="form-control" name="eventType" required>
+              <option value="normal">Volunteering</option>
+              <!-- if user.role==organisation then only allow donation selection -->
+              <option value="donation">Donation</option>
+            </select>
+          </div>
+        </div>
 
-      <input type="submit" value="Submit" />
-    </form>
-    <%= (locals.error) ? locals.error : '' %>
-  </body>
-</html>
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Date:</label>
+          <div class="col-sm-9">
+            <!-- today's date as the default value -->
+            <input class="form-control" type="date" name="date" required />
+          </div>
+        </div>
+        
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Time:</label>
+          <div class="col-sm-9">
+            <!-- now time as the default value -->
+            <input class="form-control" type="time" name="time" required />
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Location:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" name="location" required />
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label class="col-sm-3 col-form-label">Max Volunteers:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="number" name="maxVolunteers" />
+          </div>
+        </div>
+        <div class="row justify-content-end mb-3">
+          <div class="col-sm-9">
+              <input
+                type="submit"
+                value="Submit"
+                class="btn btn-primary w-md"
+              />
+            </div>
+          </div>
+      </form>
+    </div>
+    <!-- container-fluid -->
+  </div>
+  <!-- End Page-content -->
+
+  <%- include('partials/footer.ejs') %>
+</div>

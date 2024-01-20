@@ -4,11 +4,15 @@ const { createTokenForUser } = require("../services/authentication");
 
 const userSchema = new Schema(
   {
-    fullName: { type: String, required: true },
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    phone: { type: String, required: true, unique: true },
+    aadharno: { type: String, required: true, unique: true },
+    education: { type: String },
+    job: { type: String },
     password: { type: String, required: true },
     salt: { type: String },
-    profileImageURL: { type: String, default: "/images/avatar.png" },
+    languages: [{ type: String }],
     skills: [{ type: String }],
     interests: [{ type: String }],
     location: { type: String },
@@ -52,7 +56,7 @@ userSchema.static(
     const token = createTokenForUser(user);
     return token;
   }
-);  
+);
 
 const User = model("users", userSchema);
 
